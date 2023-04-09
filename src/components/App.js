@@ -1,29 +1,48 @@
 import React,{useState,useEffect,useRef} from 'react'
 import '../styles/App.css';
 const App = () => {
+  const[state1 , setState1] =useState("");
+  const[state2 , setState2] =useState("");
+  const[email, setEmail] =useState("");
+  const[pass, setPass] =useState("");
+  
+  const ref1 = useRef();
+  const ref2 = useRef();
 
-//code here 
-  const emailVal = useRef("")
-  const passValue = useRef("")
+  function handleInput1(e){
+   setState1(e.target.value);
+  }
 
-const [email, setEmail] = useState("");
-const [pass, setPass] = useState("");
+  function handleInput2(e){
+    setState2(e.target.value);
+  }
 
-useEffect(()=>{
-  emailVal.current = email;
-  passValue.current = pass;
-})
+   
 
+  function handlesubmit(){
+       if(!state1){
+        ref1.current.focus();
+       }
+       else if(!state2){
+        ref2.current.focus();
+       }
+       else{
+        setEmail( state1); 
+        setPass (state2); 
+        setState1("");
+        setState2("");
+       }
+  }
 
   return (
     <div id="main">
       Email
-      <input id="inputEmail" type="text" value={email}  onChange={(e)=> setEmail(e.target.value)}/><br required/>
+      <input id="inputEmail" type="text" value={state1} ref={ref1} onChange={handleInput1}/><br/>
       Password
-      <input id="inputPassword" type="text" value={pass}  onChange={(e)=> setPass(e.target.value)}/><br required/>
-      <button id="submitButton" onClick={()=> {}}>Submit</button><br/>
-      <p id="emailText">Your Email : {emailVal.current}</p>
-      <p id ="passwordText">Your Password : {passValue.current}</p>
+      <input id="inputPassword" type="text" value={state2} ref={ref2} onChange={handleInput2}/><br/>
+      <button id="submitButton" onClick={handlesubmit}>Submit</button><br/>
+      <p id="emailText">Your Email : {email}</p>
+      <p id ="passwordText">Your Password : {pass}</p>
       
     </div>
   )
